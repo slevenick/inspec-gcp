@@ -50,6 +50,16 @@ module Inspec::Resources
 
     RSpec::Matchers.alias_matcher :allow_port_protocol, :be_allow_port_protocol
 
+    # Check if this firewall rule allows ONLY the specified port and protocol
+    def allow_only_port_and_protocol?(port, protocol)
+      return false if !defined?(@firewall.allowed) || @firewall.allowed.nil?
+      @firewall.allowed.none? do |allow_rule|
+        allow_rule.ip_protocol != protocol || allow_rule.ports != [port]
+      end
+    end
+
+    RSpec::Matchers.alias_matcher :allow_only_port_and_protocol, :be_allow_only_port_and_protocol
+
     # initial implementation allows to search for target source and destination tags - can
     # filter plural firewalls based on direction to pin down the desired rules and choose the appropriate method
     # see similar below example for ip_range_list

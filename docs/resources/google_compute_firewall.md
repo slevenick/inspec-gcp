@@ -76,6 +76,13 @@ The following examples show how to use this InSpec audit resource.
       it { should allow_target_tags_only ["allow-gcp-other-tag"] }
     end
 
+### Test whether firewall rule allows only a single port and protocol
+
+    describe google_compute_firewall(project: 'chef-inspec-gcp', name: 'firewall-rule') do
+      it { should exist }
+      it { should allow_only_port_and_protocol('443', 'tcp') }
+    end
+
 <br>
 
 ## Properties
@@ -84,7 +91,7 @@ The following examples show how to use this InSpec audit resource.
 
 In addition, the following helpers are available:
 
-* `allowed_http?`, `allowed_ssh?`, `allow_port_protocol`, `allow_source_tags`, `allow_source_tags_only`, `allow_target_tags`, `allow_target_tags_only`, `allow_ip_ranges`, `allow_ip_ranges_only`
+* `allowed_http?`, `allowed_ssh?`, `allow_port_protocol`, `allow_source_tags`, `allow_source_tags_only`, `allow_target_tags`, `allow_target_tags_only`, `allow_ip_ranges`, `allow_ip_ranges_only`, `allow_only_port_and_protocol`
 
 <br>
 
